@@ -1,0 +1,17 @@
+---
+galaxy_info:
+  author: Vyacheslav Terdunov
+  description: none
+  license: MIT
+
+  min_ansible_version: 2.3
+
+  platforms:
+    - name: Ubuntu
+      versions:
+        - 14.04
+        - 16.04
+
+  galaxy_tags: []
+
+dependencies: []

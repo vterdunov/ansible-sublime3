@@ -1,0 +1,62 @@
+---
+- name: Ensure that git is Installed
+  apt:
+    name: git
+    update_cache: yes
+  become: yes
+
+- name: Add sublime3 repo
+  apt_repository:
+    repo: '{{ sublime3_apt_repo }}'
+    state: present
+    update_cache: no
+  become: yes
+
+- name: Add apt signing key
+  apt_key:
+    url: '{{ sublime3_apt_repo_key }}'
+    state: present
+  become: yes
+
+- name: Install sublime text 3
+  apt:
+    name: sublime-text
+    update_cache: yes
+    state: latest
+  become: yes
+
+- name: Create sublime directory
+  file:
+    path: '{{ item }}'
+    state: directory
+    mode: 0755
+  with_items:
+    - '{{ sublime3_config_dir }}/Packages/User/'
+    - '{{ sublime3_config_dir }}/Installed Packages/'
+
+- name: Install PackageControl for Sublime
+  get_url:
+    url: '{{ sublime3_packagecontrol_url }}'
+    dest: '{{ sublime3_config_dir }}/Installed Packages/Package Control.sublime-package'
+
+- name: Download and install packages for Sublime
+  git:
+    repo: '{{ item.url }}'
+    dest: '{{ sublime3_config_dir }}/Packages/{{ item.name }}'
+  with_items:
+    - '{{ sublime3_packages_url_list }}'
+
+- name: Copy .rubocop.yml
+  copy:
+    src: 'rubocop.yml'
+    dest: ~/.rubocop.yml
+
+- name: Copy sublime packages settings
+  copy:
+    src: '{{ item }}'
+    dest: '{{ sublime3_config_dir }}/Packages/User/{{ item }}'
+  with_items:
+    - Preferences.sublime-settings
+    - SublimeGit.sublime-settings
+    - SublimeLinter.sublime-settings
+    - Default (Linux).sublime-keymap
