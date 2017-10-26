@@ -10,3 +10,4 @@ sublime3_packages_url_list:
   - { url: 'https://github.com/SublimeLinter/SublimeLinter-shellcheck.git', name: 'SublimeLinter-shellcheck' }
   - { url: 'https://github.com/Zeeker/sublime-GitConflictResolver.git', name: 'GitConflictResolver'}
   - { url: 'https://github.com/sindresorhus/editorconfig-sublime.git', name: 'EditorConfig'}
+  - { url: 'https://github.com/jason-kane/PyYapf.git', name: 'PyYapf'}
